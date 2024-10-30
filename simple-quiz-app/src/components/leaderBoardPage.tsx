@@ -1,5 +1,4 @@
-// Leaderboard.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface LeaderboardEntry {
@@ -11,29 +10,62 @@ const Leaderboard: React.FC = () => {
     const location = useLocation();
     const { score, name } = location.state || {};
 
-   // We simulate a list of leaders. In a real application, this would come from an API.
-    const leaders: LeaderboardEntry[] = [
-        { name: "Alice", score: 10 },
-        { name: "Bob", score: 8 },
-        { name: "Charlie", score: 6 },
-        { name: "Daniel", score: 5 },
-        { name: "Eva", score: 4 },
-        { name: name, score: score }, // Add the current player to the leaderboard
-    ];
+    const [leaders, setLeaders] = useState<LeaderboardEntry[]>([]);
+    const [isMinimumPlayersMet, setIsMinimumPlayersMet] = useState(false);
 
-// Sort leaders by score in descending order
-    const sortedLeaders = leaders.sort((a, b) => b.score - a.score);
+    const getLeadersFromLocalStorage = (): LeaderboardEntry[] => {
+        const storedLeaders = localStorage.getItem('leaders');
+        return storedLeaders ? JSON.parse(storedLeaders) : [];
+    };
+
+    const saveLeadersToLocalStorage = (updatedLeaders: LeaderboardEntry[]) => {
+        localStorage.setItem('leaders', JSON.stringify(updatedLeaders));
+    };
+
+    useEffect(() => {
+        const storedLeaders = getLeadersFromLocalStorage();
+
+        // Si existen `name` y `score`, intentamos agregar o actualizar al jugador
+        if (name && score !== undefined) {
+            const existingPlayerIndex = storedLeaders.findIndex(player => player.name === name);
+
+            if (existingPlayerIndex >= 0) {
+                // Si el jugador ya existe, actualizamos el puntaje solo si es mayor
+                if (storedLeaders[existingPlayerIndex].score < score) {
+                    storedLeaders[existingPlayerIndex].score = score;
+                }
+            } else {
+                // Si el jugador no existe, lo agregamos a la lista
+                storedLeaders.push({ name, score });
+            }
+
+            // Ordenamos y guardamos los líderes
+            const sortedLeaders = storedLeaders.sort((a, b) => b.score - a.score);
+            saveLeadersToLocalStorage(sortedLeaders);
+            setLeaders(sortedLeaders);
+        } else {
+            // Si no hay nuevo jugador, solo cargamos los líderes almacenados
+            setLeaders(storedLeaders);
+        }
+
+        // Verificar si se alcanzó el mínimo de jugadores (3)
+        setIsMinimumPlayersMet(storedLeaders.length >= 3);
+    }, [name, score]);
 
     return (
         <div>
             <h1>Leaderboard</h1>
-            <ul>
-                {sortedLeaders.map((entry, index) => (
-                    <li key={index}>
-                        {entry.name}: {entry.score} points
-                    </li>
-                ))}
-            </ul>
+            {isMinimumPlayersMet ? (
+                <ul>
+                    {leaders.map((entry, index) => (
+                        <li key={index}>
+                            {entry.name}: {entry.score} points
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Se necesitan al menos 3 jugadores para ver el leaderboard.</p>
+            )}
         </div>
     );
 };
