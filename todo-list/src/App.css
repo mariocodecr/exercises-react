@@ -1,0 +1,117 @@
+/* src/App.css */
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  max-width: 90%;
+  margin: auto;
+  padding: 20px;
+}
+
+.task-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+input[type="text"], input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  flex-wrap: wrap;
+}
+
+.task span, .task select, .task .deadline {
+  margin-bottom: 5px;
+}
+
+.task.pending { background-color: #ffecd1; }
+.task.in-progress { background-color: #d1e7ff; }
+.task.completed { background-color: #d1ffd6; text-decoration: line-through; }
+
+.deadline {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+select {
+  padding: 6px;
+  font-size: 0.9rem;
+}
+
+button {
+  background-color: #4CAF50; /* Green color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+}
+
+button:active {
+  background-color: #3e8e41; /* Even darker green when clicked */
+}
+
+
+@media (min-width: 600px) {
+  .App {
+    max-width: 600px;
+  }
+
+  .task-input {
+    flex-direction: row;
+  }
+
+  input[type="text"], input[type="date"] {
+    width: auto;
+    flex: 1;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  .task {
+    padding: 10px 16px;
+    flex-wrap: nowrap;
+  }
+
+  .deadline {
+    font-size: 0.9rem;
+  }
+
+  select {
+    padding: 4px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .App {
+    max-width: 700px;
+  }
+
+  .task {
+    padding: 12px 20px;
+  }
+}
