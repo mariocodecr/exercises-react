@@ -1,0 +1,64 @@
+
+.app {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-info h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .task-info p {
+    margin: 5px 0 0;
+    color: #888;
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .status.pending {
+    background-color: #ff9800;
+  }
+  
+  .status.completed {
+    background-color: #4caf50;
+  }
+  
