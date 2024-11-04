@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { TextField, Button, Container, Box } from '@mui/material';
+import googleLogo from '../assets/img/google-logo.png'
 
 
 const useStyles = makeStyles({
@@ -36,7 +37,7 @@ const Home: React.FC = () => {
 
     return (
         <Container className={classes.searchContainer}>
-            <img src="#" alt="Google Logo" className={classes.logo} />
+            <img src={googleLogo} alt="Google Logo" className={classes.logo} />
             <form onSubmit={handleSearch} className="search-form">
                 <TextField variant="outlined"
                     placeholder="search Google or type a URL"
